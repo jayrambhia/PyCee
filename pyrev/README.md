@@ -6,12 +6,12 @@ My first program using Python/C API.
 Takes a string as input as returns the reversed string.
 
 Install
-=====
+=======
 
-sudo python setup.py install
+    sudo python setup.py install
 
 Usage
-====
+======
 
-import pyrev
-print pyrev.pyrev("Jim Morrsion")
+    import pyrev
+    print pyrev.pyrev("Jim Morrsion")

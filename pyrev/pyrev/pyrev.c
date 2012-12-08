@@ -1,11 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-/*
-extern "C" {
-    #include <Python.h>
-}
-*/
 #include <Python.h>
 
 PyObject* pyrev(PyObject* self, PyObject* str1)
@@ -38,21 +33,18 @@ PyObject* pyrev(PyObject* self, PyObject* str1)
     int len;
     for (len=0; *str2!=NULL; str2++)
     {
-        //printf("%c %p\n",*str2, str2);
         len+=1;
     }
-    //printf("%d\n",len);
     str2-=len;
     
     char* str3 = (char *)malloc((len+1)*sizeof(char));
     str3+=len;
     *str3 = NULL;
     str3--;
+    
     for (;*str2!=NULL; ++str2, str3--)
     {
         *str3 = *str2;
-        //printf("%c %p\n",*str2, str2);
-        //printf("%c %p\n",*str3, str3);
     }
     str3++;
     
