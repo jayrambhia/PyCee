@@ -12,7 +12,7 @@ PyObject* pyrev(PyObject* self, PyObject* str1)
 {
     
     char* str2;
-    //if (!PyArg_ParseTuple(str1, "s",  &str1))  <== Here was the error. Dafaq!
+    //if (!PyArg_ParseTuple(str1, "s",  &str1))  <== Here was the error. Dafaq! (Obvious mistake, Duh!)
     if (!PyArg_ParseTuple(str1, "s",  &str2))
     {
         return NULL;
@@ -38,10 +38,10 @@ PyObject* pyrev(PyObject* self, PyObject* str1)
     int len;
     for (len=0; *str2!=NULL; str2++)
     {
-        printf("%c %p\n",*str2, str2);
+        //printf("%c %p\n",*str2, str2);
         len+=1;
     }
-    printf("%d\n",len);
+    //printf("%d\n",len);
     str2-=len;
     
     char* str3 = (char *)malloc((len+1)*sizeof(char));
@@ -67,6 +67,6 @@ PyMethodDef methods[] = {
 void initpyrev(void)
 {
     Py_InitModule3("pyrev", methods,
-                   "Extension module example!");
+                   "Reverse the string!");
 }
 
