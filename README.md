@@ -14,3 +14,6 @@ Usage
     import pycee
     a = [1,4,3,2,0,9]
     print pycee.selectionSort(a)
+    
+    b = pycee.ccv.CountDict()
+    b.set("a","hello")
