@@ -74,7 +74,7 @@ PyObject* py_selectionSort(PyObject* self, PyObject* args)
     
     /* list is an object we pull out of the args with PyArg_ParseTuple. 
      * Since args is borrowed, we can borrow value out of it, 
-     * so numbers is also borrowed. */
+     * so list is also borrowed. */
     //Py_DECREF(list);
     return flist;
 }
