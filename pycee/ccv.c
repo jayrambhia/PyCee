@@ -5,19 +5,30 @@
 typedef struct {
     PyObject_HEAD
     PyObject * dict;
+    PyObject * keys;
+    PyObject * vals;
     int count;
+    char* name;
 } CountDict;
 
 static int CountDict_init(CountDict *self, PyObject *args, PyObject* kwds)
 {
     self->dict = PyDict_New();
+    self->keys = PyList_New(0);
+    self->vals = PyList_New(0);
     self->count = 0;
+    if (!PyArg_ParseTuple(args, "s", &self->name))
+    {
+        return -1;
+    }
     return 0;
 }
 
 static void CountDict_dealloc(CountDict *self)
 {
     Py_XDECREF(self->dict);
+    Py_XDECREF(self->keys);
+    Py_XDECREF(self->vals);
     self->ob_type->tp_free((PyObject*)self);
 }
 
@@ -25,8 +36,14 @@ static PyMemberDef
 CountDict_members[] = {
     { "dict",   T_OBJECT, offsetof(CountDict, dict), 0,
                 "The dictionary of value collected so far."},
+    { "keys",   T_OBJECT, offsetof(CountDict, keys), 0,
+                "The keys collected so far."},
+    { "vals",   T_OBJECT, offsetof(CountDict, vals), 0,
+                "The values collected so far."},
     { "count",  T_INT, offsetof(CountDict, count), 0,
                 "The number of times set() has been called."},
+    { "name",  T_STRING, offsetof(CountDict, name), 0,
+                "The name of the type."},
     {NULL}
 };
 
@@ -44,14 +61,33 @@ static PyObject* CountDict_Set(CountDict *self, PyObject* args)
     {
         return NULL;
     }
-    
+    PyList_Append(self->keys, PyString_FromString(key));
+    PyList_Append(self->vals, value);
     self->count ++;
     
     return Py_BuildValue("i", self->count);
 }
 
+static PyObject* CountDict_GetKeys(CountDict *self)
+{
+    return self->keys;
+}
+
+static PyObject* CountDict_GetVals(CountDict *self)
+{
+    return self->vals;
+}
+
+static PyObject* CountDict_GetName(CountDict* self)
+{
+    return Py_BuildValue("s", self->name);
+}
+
 static PyMethodDef CountDict_methods[] = {
     {"set", (PyCFunction) CountDict_Set, METH_VARARGS, "set a key and increment the count."},
+    {"getKeys", (PyCFunction) CountDict_GetKeys, METH_VARARGS, "get all the keys."},
+    {"getVals", (PyCFunction) CountDict_GetVals, METH_VARARGS, "get all the values."},
+    {"getName", (PyCFunction) CountDict_GetName, METH_VARARGS, "get name of the type"},
     {NULL}
 };
 
