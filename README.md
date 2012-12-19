@@ -15,5 +15,5 @@ Usage
     a = [1,4,3,2,0,9]
     print pycee.selectionSort(a)
     
-    b = pycee.ccv.CountDict()
+    b = pycee.ccv.CountDict("dict 1")
     b.set("a","hello")
